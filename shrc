@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+export SONGS_FOLDER="~/Dropbox/9SIGMA_Clips/Step 1 species/OSFL Reclip (DONE)/"
+export SONGS_MONO20K="~/code/MONO20K/"
