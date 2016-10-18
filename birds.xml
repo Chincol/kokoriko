@@ -1,0 +1,27 @@
+<birds>
+  <datapoint>
+    <filename>input1</filename>
+    <isBird>True</isBird>
+    <isNoise>False</isNoise>
+    <compositionOf>
+        <datapoint>
+          <filename>file1</filename>
+          <startTime>1.0</startTime>
+          <endTime>3.0</endTime>
+        </datapoint>
+        <datapoint>
+          <filename>file2</filename>
+          <startTime>2.0</startTime>
+          <endTime>2.5</endTime>
+        </datapoint>
+    </compositionOf>
+  </datapoint>
+  <datapoint>
+    <filename>input2</filename>
+    <isBird>False</isBird>
+    <isNoise>False</isNoise>
+	<!-- This may be an empty list (useful for the original files, which are not the composition of any other files) -->
+    <compositionOf>
+    </compositionOf>
+  </datapoint>
+</birds>
