@@ -15,11 +15,16 @@ parser.add_argument('wav', type=str, help='Input audio file')
 parser.add_argument('out', type=str, help='Output spectrogram file')
 parser.add_argument('--sampling-frequency', default=20000, type=int, help='Sampling frequency')
 parser.add_argument('--overlap', type=int, help='Number of points to overlap between segments')
+parser.add_argument('--nperseg', default=128, type=int, help='Length of each segment')
+parser.add_argument('--noverlap', type=int, default=32, help='Number of points to overlap between segments')
 args = parser.parse_args()
 
 def main(inp, out):
 	rate, data = scipy.io.wavfile.read(inp)
-	freqs, times, matrix = signal.spectrogram(data, fs=args.sampling_frequency)
+	freqs, times, matrix = signal.spectrogram(data,
+		fs=args.sampling_frequency,
+		nperseg=args.nperseg,
+		noverlap=args.noverlap)
 	saveas = { 'freqs' : freqs,
 		'times' : times,
 		'matrix' : matrix,
