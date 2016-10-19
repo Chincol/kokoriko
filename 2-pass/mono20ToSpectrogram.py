@@ -4,29 +4,33 @@ from scipy import signal
 import scipy.io.wavfile
 import numpy
 import sys
+import argparse
 
-USAGE='''
-Usage: {} <Input file> <Output file>
 
-Converts a Mono20Image to a Spectrogram. Spectrogram produces three files.
-<Output file>.matrix holds the spectrogram information.
-<Output file>.freqs holds the information of the y-axis.
-<Output file>.time time holds the information of the x-axis.
-'''.format(__file__)
+USAGE='''Converts a Mono20 wav file to a spectrogram.
+Saves the result in a .mat file to allow the use of matlab.'''
+
+parser = argparse.ArgumentParser(description=USAGE)
+parser.add_argument('wav', type=str, help='Input audio file')
+parser.add_argument('out', type=str, help='Output spectrogram file')
+parser.add_argument('--overlap', type=int, help='Number of points to overlap between segments')
 
 def main(inp, out):
 	rate, data = scipy.io.wavfile.read(inp)
 	freqs, times, matrix = signal.spectrogram(data)
-	matrix.dump('{}.matrix'.format(out))
-	freqs.dump('{}.freqs'.format(out))
-	times.dump('{}.times'.format(out))
+	saveas = { 'freqs' : freqs,
+		'times' : times,
+		'matrix' : matrix,
+	}
+	scipy.io.savemat(out, saveas)
 
 if __name__ == '__main__':
-	#try:
-		inp = sys.argv[1]
-		out = sys.argv[2]
+	try:
+		args = parser.parse_args()
+		inp = args.wav
+		out = args.out
 		main(inp, out)
 		sys.exit(0)
-	#except IndexError:
-		print(USAGE)	
+	except IndexError:
+		parser.print_help()
 		sys.exit(1)
