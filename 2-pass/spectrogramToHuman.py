@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy
 import scipy.io
@@ -15,11 +17,10 @@ parser.add_argument('sgram', type=str, help='Input spectrogram data')
 
 def main(inp):
 	data = scipy.io.loadmat(inp)
-	print(data['times'])
-	plt.pcolormesh(data['times'], data['freqs'], data['matrix'])
+	plt.pcolormesh(data['times'][0], data['freqs'][0], data['matrix'])
 	plt.ylabel('Frequency [Hz]')
 	plt.xlabel('Time [sec]')
-	plt.show
+	plt.savefig('spec.pdf')
 
 if __name__ == '__main__':
 	try:

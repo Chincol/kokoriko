@@ -13,11 +13,13 @@ Saves the result in a .mat file to allow the use of matlab.'''
 parser = argparse.ArgumentParser(description=USAGE)
 parser.add_argument('wav', type=str, help='Input audio file')
 parser.add_argument('out', type=str, help='Output spectrogram file')
+parser.add_argument('--sampling-frequency', default=20000, type=int, help='Sampling frequency')
 parser.add_argument('--overlap', type=int, help='Number of points to overlap between segments')
+args = parser.parse_args()
 
 def main(inp, out):
 	rate, data = scipy.io.wavfile.read(inp)
-	freqs, times, matrix = signal.spectrogram(data)
+	freqs, times, matrix = signal.spectrogram(data, fs=args.sampling_frequency)
 	saveas = { 'freqs' : freqs,
 		'times' : times,
 		'matrix' : matrix,
@@ -26,7 +28,6 @@ def main(inp, out):
 
 if __name__ == '__main__':
 	try:
-		args = parser.parse_args()
 		inp = args.wav
 		out = args.out
 		main(inp, out)
